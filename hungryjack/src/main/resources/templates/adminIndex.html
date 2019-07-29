@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+    <!-- Static navbar -->
+	<div th:replace="/nav :: nav"> </div>
+   
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <br><br><br>
+        </div>
+
+        <div class="row justify-content-center">
+            <img class="logo" src="./img/site-logo.png" width="80" height="80" th:src="@{/img/site-logo.png}">
+            <font size="20"> HUNGRY JACK</font>
+        </div>
+        <div class="row justify-content-center">
+            <br><br>
+        </div>
+        <form th:action="@{/search/}" th:object="${search}" method="get">
+            <div class="form-group">
+                <input type="text" class="form-control" id="searchInput" placeholder="Tasty Burger" th:field="*{searchText}">
+                <small id="searchHelp" class="form-text text-muted">Search for a restaurant to order some tasty yum-yums from oorrr just click search and we'll suggest something</small>
+            </div>
+
+            <button href="#!" class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit" id="searchBtn">Search</button>
+        </form>
+        <br/>
+       <div class="jumbotron" th:if="${restaurants!=null}">
+            <h4>Search Results:</h4>
+           <hr>
+           <th:block th:if="${restaurants!=null}" th:with="colCount=${2}">
+               <div th:each="r : ${#numbers.sequence(0, restaurants.size(), colCount)}"  class="row">
+                   <div th:each="c : ${#numbers.sequence(0, colCount - 1)}" th:if="${r + c &lt; restaurants.size()}" class="col-md-6">
+                       <h5 class="mb-1" th:text="${restaurants.get(r+c).getRestaurantName()}">name</h5>
+                       <p class="mb-1">Delivery Timings:<small th:text="${restaurants.get(r+c).getDeliveryStartTime()}+ ' - '+ ${restaurants.get(r + c).getDeliveryEndTime()}">timings</small></p>
+                       <form th:action="@{'/getMenu/'+${restaurants.get(r + c).getId()}}" method="get">
+                            <button type="submit" class="btn btn-danger" th:id="${restaurants.get(r + c).getId()}">Menu</button>
+                       </form>
+                   </div>
+               </div>
+           </th:block>
+           <div th:if="${restaurants.size()==0}">No Results!</div>
+        </div>
+
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

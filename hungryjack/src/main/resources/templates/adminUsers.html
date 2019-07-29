@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../public/css/bootstrap.css"  th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:replace="/nav :: nav"> </div>
+    <div class="jumbotron">
+        <h3>Create User</h3>
+        <form th:action="@{'/createUser/'}" method="post"><button
+                type="submit" class="btn btn-success">Create User</button></form>
+    </div>
+    <div class="jumbotron">
+        <h3>Users available:</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>Phone</th>
+                    <th>Type of User</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${allUsers}">
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getPhone()}"></td>
+                <td th:text="${user.getDtype()}"></td>
+                <td><form th:action="@{'/viewUser/'+${user.getId()}}" method="get">
+                    <button type="submit" class="btn btn-primary" th:id="${user.getId()}">View</button>
+                </form></td>
+                <td><form th:action="@{'/editUser/'+${user.getId()}}" method="get">
+                    <button type="submit" class="btn btn-primary" th:id="${user.getId()}">Edit</button>
+                </form></td>
+                <td>
+                    <button type="submit" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#myModal'+${user.getId()}">Delete</button>
+                    <div class="modal fade" th:attr="id='myModal'+${user.getId()}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Are you sure you want to delete?</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Close</button>
+                                    <form th:action="@{'/deleteUser/'+${user.getId()}}" method="post"><button
+                                            type="submit" class="btn btn-success">Yes</button></form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

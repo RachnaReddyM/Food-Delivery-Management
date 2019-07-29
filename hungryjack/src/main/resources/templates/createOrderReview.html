@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+    <div th:replace="/nav :: nav"> </div>
+	<form th:action="@{/newOR/}" th:object="${orderReview}" method="post">
+        <label for="InputName">Please make sure you enter the existing Customer ID and Order ID</label>
+        <div class="form-group">
+            <label for="InputName">Customer ID</label>
+            <input type="text" class="form-control" id="cid" th:field="*{customerOrderReview.id}"/>
+        </div>
+        <div class="form-group">
+            <label for="InputName">Order ID</label>
+            <input type="text" class="form-control" id="oid" th:field="*{foodOrderReview.id}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="rating">Rating(1-low, 5-high)</label>
+            <select class="form-control" id="rating" th:field="*{ratings}">
+                <option th:value=1>1</option>
+                <option th:value=2>2</option>
+                <option th:value=3>3</option>
+                <option th:value=4>4</option>
+                <option th:value=5>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="review">Review</label>
+            <textarea class="form-control" id="review" rows="3" th:field="*{review}"></textarea>
+        </div>
+
+        	<button type="submit" class="btn btn-primary mb-2">Save</button>
+    </form>
+
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

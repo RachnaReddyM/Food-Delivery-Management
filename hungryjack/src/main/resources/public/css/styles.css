@@ -1,0 +1,62 @@
+/* for site logo*/
+.navbar-left img {
+    height: 50px;
+    width:50px;
+}
+
+/* site navbar heading */
+.heading {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: 300;
+    letter-spacing: -3px;
+    line-height: 1;
+    text-shadow: #ededed 3px 2px 0;
+}
+
+/*  FoodOrders Status tracking bar*/
+
+.tracking-progress-bar {
+    margin: 10px 0
+}
+
+.tracking-progress-bar__item {
+    background: #E5E7ED;
+    border-radius: 20%;
+    color: #768CAD;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 17px;
+    height: 80px;
+    line-height: 30px;
+    position: relative;
+    text-align: center;
+    width: 81px;
+    z-index: 9;
+}
+
+.tracking-progress-bar__item__bar {
+    background: #E5E7ED;
+    display: inline-block;
+    margin: 0 -5px;
+    height: 12px;
+    width: 170px;
+    z-index: 2;
+}
+
+.tracking-progress-bar__item__bar--active {
+    background: #093782;
+}
+
+.tracking-progress-bar__item--first {
+    margin-left: 0;
+}
+
+.tracking-progress-bar__item--active {
+    background: #093782;
+    color: #fff;
+}

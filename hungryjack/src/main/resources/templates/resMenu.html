@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+
+    <!-- Static navbar -->
+	<div th:replace="/nav :: nav"> </div>
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <!--Usage of models we wrote in WepAppController th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username} -->
+       <h3>Menu</h3>
+        <p th:if="${session.user == null}">Note: You should be logged in to order!!!</p>
+        <p th:if="${session.user!=null and session.user.userType!='Customer'}">Note: You should be a Customer to Order!!!</p>
+        <form th:action="@{/order/}" method="post" th:object="${menuItems}">
+            <table>
+                <tr>
+                    <th>Select Item</th>
+                    <th>Price</th>
+                </tr>
+            <tr th:each="item : ${menuItems}">
+                <td><input type="checkbox" class="form-check-input" th:name="orderItems" th:value="${item.getItemName()+':'+item.getPrice()+':'+item.getResId()+':'+item.getQuantity()}"/>
+                <label class="form-check-label"th:text="${item.getItemName()}">Check me out</label></td>
+                <td><p th:text="${item.getPrice()}"></p></td>
+                <!--<td><input type="text" id="quantity"  name="quantity" placeholder="1" th:value="${item.getQuantity()}"/></td>-->
+            </tr>
+            </table>
+            <button th:if="${session.user != null and session.user.userType=='Customer'}" type="submit" class="btn btn-danger">Order</button>
+
+        </form>
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

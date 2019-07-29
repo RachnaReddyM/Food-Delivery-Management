@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light blue-grey">
+        <div class="navbar-header">
+            <a href="#" class="navbar-left" th:href="@{/}"><img src="./img/site-logo.png" th:src="@{/img/site-logo.png}"></a>
+            <a class="navbar-brand" th:href="@{/}">HUNGRY JACK</a>
+        </div>
+    </nav>
+    
+    <!-- Main component for a primary marketing message or call to action -->
+
+        <h4 th:text="'Please enter registration details' "></h4>
+        
+	<form action="#" method="post" th:action="@{/users/register}" th:object="${registerForm}">
+        <div class="form-group">
+            <label for="InputName">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Tom Hanks">
+        </div>
+        <div class="form-group">
+            <label for="InputEmail">Email address</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="InputPassword">Password</label>
+            <input type="password" class="form-control" id="password"  th:field="*{password}" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="InputAddress">Phone Number</label>
+            <input type="text" class="form-control" id="address" th:field="*{phone}" placeholder="223-219-4563">
+        </div>
+        <div class="form-group">
+            <label for="userType">Please select type of user.</label>
+            <select class="form-control" id="type" th:field="*{type}" onchange="getManagers()">
+                <option th:value="Customer">Customer</option>
+                <option th:value="DeliveryAgent">Delivery Agent</option>
+                <option th:value="RestaurantManager">Restaurant Manager</option>
+            </select>
+        </div>
+        <div class="form-group" style="display: none" id="managers">
+            <label for="managerList">Please select Manager</label>
+            <select id="selectedManager" th:field="*{deliveryManagerId}">
+                <option th:each="item : ${deliveryManagers}"
+                        th:value="${item.getId()}"
+                        th:text="${item.getDeliveryManagerName()}">Options</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="customer">
+            <label for="About">About Customer</label>
+            <input type="text" class="form-control" id="aboutCustomer" th:field="*{about}" placeholder="Tell me your cuisine preference">
+        </div>
+
+        <div class="form-group" id="restManager1" style="display: none">
+            <label for="startTime">Work Start Time</label>
+            <input type="text" class="form-control" id="workStartTime" th:field="*{workStartTime}" placeholder="Enter in HH:MM format">
+        </div>
+
+        <div class="form-group" id="restManager2" style="display: none">
+            <label for="endTime">Work Start Time</label>
+            <input type="text" class="form-control" id="workEndTime" th:field="*{workEndTime}" placeholder="Enter in HH:MM format">
+        </div>
+
+        <div class="form-group" id="restManager3" style="display: none">
+            <label for="DayOf">Weekly Day Off</label>
+            <input type="text" class="form-control" id="dayOff" th:field="*{weeklyOffDay}" placeholder="Enter the day of the week">
+        </div>
+
+        	<button type="submit" class="btn btn-primary mb-2">Save</button>
+        
+      		<div th:if="${error != null}">
+                <h2 class="title">That email address is already registered!</h2>
+        	</div>
+
+
+
+    </form>
+
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script>
+    
+    function getManagers() {
+        if(document.getElementById("type").value == "DeliveryAgent"){
+            document.getElementById("managers").style.display = "inline";
+            document.getElementById("customer").style.display = "none";
+            document.getElementById("restManager1").style.display = "none";
+            document.getElementById("restManager2").style.display = "none";
+            document.getElementById("restManager3").style.display = "none";
+        }
+        else if(document.getElementById("type").value == "Customer"){
+            document.getElementById("customer").style.display = "inline";
+            document.getElementById("restManager1").style.display = "none";
+            document.getElementById("restManager2").style.display = "none";
+            document.getElementById("restManager3").style.display = "none";
+            document.getElementById("managers").style.display = "none";
+
+        }
+        else if(document.getElementById("type").value == "RestaurantManager"){
+            document.getElementById("restManager1").style.display = "inline";
+            document.getElementById("restManager2").style.display = "inline";
+            document.getElementById("restManager3").style.display = "inline";
+            document.getElementById("managers").style.display = "none";
+            document.getElementById("customer").style.display = "none";
+        }
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>

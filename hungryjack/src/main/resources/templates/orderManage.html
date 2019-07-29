@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
+    <link rel="icon" href="../public/img/favicon.png" th:href="@{/img/favicon.png}"/>
+    <title>Hungry Jack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+    <!-- Static navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light blue-grey">
+
+        <!-- Brand -->
+        <div class="navbar-header">
+            <a href="#" class="navbar-left" th:href="@{/}"><img src="./img/site-logo.png" th:src="@{/img/site-logo.png}"></a>
+            <a class="navbar-brand" th:href="@{/}">HUNGRY JACK</a>
+        </div>
+
+        <!-- Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/profile/}">Profile</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <!--Usage of models we wrote in WepAppController th:text="'Welcome to basic Bootstrap with Spring Boot created by ' + ${username} -->
+        <h3>Selected Below food items:</h3>
+        <form th:action="@{/placeOrder/}" method="post" th:object="${instructions}">
+            <table>
+                <tr>
+                    <th>Selected Item</th>
+                    <th>Price</th>
+                </tr>
+                <tr th:each="item : ${selectedMenuItems.getMenuList()}">
+                    <td><p th:text="${item.getItemName()}">Check me out</p></td>
+                    <td><p th:text="${item.getPrice()}"></p></td>
+                    <!--<td><input type="text" class="form-control" id="quantity" th:field="*{item}" placeholder="1"></td>-->
+                </tr>
+            </table>
+            <input type="hidden" style="visibility: hidden;" th:text="${selectedMenuItems.getId()}" th:field="*{orderId}"/>
+            <p>Please complete the below details for the order to be placed!!</p>
+            <label>Prepation Instructions if any:</label>
+            <textarea class="form-control" id="prep" rows="3" th:field="*{prepInstructions}"></textarea>
+            <p>Delivery Address:</p>
+            <div class="form-group">
+                <input type="text" class="form-control" id="apt" placeholder="Apt" th:field="*{apt}"><br/>
+                <input type="text" class="form-control" id="Street" placeholder="Street" th:field="*{street}"><br/>
+                <input type="text" class="form-control" id="inputCity" placeholder="City" th:field="*{city}"><br/>
+                <input type="text" class="form-control" id="inputState" placeholder="State" th:field="*{state}"><br/>
+                <input type="text" class="form-control" id="inputCountry" placeholder="Country" th:field="*{country}"><br/>
+                <input type="text" class="form-control" id="inputZip" placeholder="ZipCode" th:field="*{delzipcode}"><br/>
+                <label>Delivery Instructions</label>
+                <textarea class="form-control" id="delivery" rows="3" placeholder="Delivery Instructions" th:field="*{deliveryInstructions}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger">Place Order</button>
+
+        </form>
+    </div>
+</div> <!-- /container -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../public/js/hungryjack-scripts.js" th:src="@{/js/hungryjack-scripts.js}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+</body>
+</html>
